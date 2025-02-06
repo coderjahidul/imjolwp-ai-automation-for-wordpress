@@ -1,4 +1,6 @@
 <?php
+// add namespace
+namespace Admin\Settings;
 class Imjolwp_dashboard {
     /**
 	 * Display the admin dashboard page.

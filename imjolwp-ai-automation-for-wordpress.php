@@ -39,6 +39,14 @@ define( 'IMJOLWP_AI_AUTOMATION_FOR_WORDPRESS_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
+ */
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require_once __DIR__ . '/vendor/autoload.php';
+}
+
+
+/**
+ * The code that runs during plugin activation.
  * This action is documented in includes/class-imjolwp-ai-automation-for-wordpress-activator.php
  */
 function activate_imjolwp_ai_automation_for_wordpress() {

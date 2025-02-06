@@ -1,4 +1,5 @@
 <?php
+namespace Admin\Settings;
 class Settings_page {
 
     /**

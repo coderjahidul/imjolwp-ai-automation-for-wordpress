@@ -1,5 +1,5 @@
 <?php
-
+namespace Includes\Ai;
 /**
  * Handles cURL requests for AI-related tasks.
  *

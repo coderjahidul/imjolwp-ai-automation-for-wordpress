@@ -1,5 +1,9 @@
 <?php
-
+namespace Admin;
+use Includes\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
+use Includes\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Excerpt;
+use Admin\Settings\Settings_page;
+use Admin\Settings\Imjolwp_dashboard;
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -67,7 +71,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 
 	public function settings_page() {
 		// Load the settings page
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-imjolwp-ai-automation-for-wordpress-settings';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-imjolwp-ai-automation-for-wordpress-settings'; // using composer autoloader
 	
 		$settings_page = new Settings_page();
 		$settings_page->display_settings_page();  // Ensure this method is defined in your Settings_page class to render the page
@@ -75,7 +79,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 
 	public function display_admin_dashboard_page() {
 		// Load the dashboard page
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-imjolwp-ai-automation-for-wordpress-dashboard.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-imjolwp-ai-automation-for-wordpress-dashboard.php'; // using composer autoloader
 
 		$dashboard_page = new Imjolwp_dashboard();
 		$dashboard_page->display_dashboard_page(); // Ensure this method is defined in your Dashboard_page class to render the page
@@ -293,7 +297,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
             return;
         }
 		// Load AI Description Generator Class
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/ai/class-imjolwp-ai-automation-for-wordpress-ai-description.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/ai/class-imjolwp-ai-automation-for-wordpress-ai-description.php'; // using composer autoloader
 	
 		// Instantiate the AI class
 		$ai_description_generator = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
@@ -302,7 +306,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 		$generated_description = $ai_description_generator->generate_description( $post_title );
 
 		// Load Ai Summary Generator Class
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/ai/class-imjolwp-ai-automation-for-wordpress-ai-summary.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/ai/class-imjolwp-ai-automation-for-wordpress-ai-summary.php'; using composer autoloader
 	
 		// Instantiate the AI class
 		$ai_summary_generator = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Excerpt();

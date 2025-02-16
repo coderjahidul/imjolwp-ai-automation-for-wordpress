@@ -1,7 +1,7 @@
 <?php
 // add namespace
-namespace Admin\Settings;
-class Imjolwp_dashboard {
+namespace Imjolwp\Admin\Settings;
+class Imjolwp_Ai_Automation_For_Wordpress_Dashboard {
     /**
 	 * Display the admin dashboard page.
 	 *

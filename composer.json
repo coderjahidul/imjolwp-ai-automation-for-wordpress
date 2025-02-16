@@ -4,9 +4,12 @@
     "autoload": {
         "psr-4": {
             "Imjolwp\\AI\\": "includes/ai/",
-            "Imjolwp\\Admin\\": "admin/"
+            "Imjolwp\\Admin\\": "admin/",
+            "Imjolwp\\Public\\": "public/",
+            "Imjolwp\\": "includes/"
 
         }
+
     },
     "authors": [
         {

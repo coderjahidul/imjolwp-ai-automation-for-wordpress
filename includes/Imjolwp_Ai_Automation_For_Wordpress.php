@@ -27,6 +27,11 @@
  * @subpackage Imjolwp_Ai_Automation_For_Wordpress/includes
  * @author     Jahidul islam Sabuz <sobuz0349@gmail.com>
  */
+namespace Imjolwp;
+use Imjolwp\Admin\Imjolwp_Ai_Automation_For_Wordpress_Admin;
+use Imjolwp\Imjolwp_Ai_Automation_For_Wordpress_Loader;
+use Imjolwp\Imjolwp_Ai_Automation_For_Wordpress_i18n;
+use Imjolwp\Public\Imjolwp_Ai_Automation_For_Wordpress_Public;
 class Imjolwp_Ai_Automation_For_Wordpress {
 
 	/**
@@ -103,24 +108,25 @@ class Imjolwp_Ai_Automation_For_Wordpress {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-imjolwp-ai-automation-for-wordpress-loader.php';
+		//require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-imjolwp-ai-automation-for-wordpress-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-imjolwp-ai-automation-for-wordpress-i18n.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-imjolwp-ai-automation-for-wordpress-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-imjolwp-ai-automation-for-wordpress-admin.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-imjolwp-ai-automation-for-wordpress-admin.php';
+		// use Admin\Imjolwp_Ai_Automation_For_Wordpress_Admin;
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-imjolwp-ai-automation-for-wordpress-public.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-imjolwp-ai-automation-for-wordpress-public.php';
 
 		
 

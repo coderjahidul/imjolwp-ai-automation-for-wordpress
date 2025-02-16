@@ -43,6 +43,9 @@ define( 'IMJOLWP_AI_AUTOMATION_FOR_WORDPRESS_VERSION', '1.0.0' );
 if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
+use Imjolwp\Imjolwp_Ai_Automation_For_Wordpress;
+use Imjolwp\Imjolwp_Ai_Automation_For_Wordpress_Activator;
+use Imjolwp\Imjolwp_Ai_Automation_For_Wordpress_Deactivator;
 
 
 /**
@@ -50,7 +53,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
  * This action is documented in includes/class-imjolwp-ai-automation-for-wordpress-activator.php
  */
 function activate_imjolwp_ai_automation_for_wordpress() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-for-wordpress-activator.php';
+	// require_once plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-for-wordpress-activator.php';
 	Imjolwp_Ai_Automation_For_Wordpress_Activator::activate();
 }
 
@@ -59,7 +62,7 @@ function activate_imjolwp_ai_automation_for_wordpress() {
  * This action is documented in includes/class-imjolwp-ai-automation-for-wordpress-deactivator.php
  */
 function deactivate_imjolwp_ai_automation_for_wordpress() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-for-wordpress-deactivator.php';
+	// require_once plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-for-wordpress-deactivator.php';
 	Imjolwp_Ai_Automation_For_Wordpress_Deactivator::deactivate();
 }
 
@@ -70,7 +73,7 @@ register_deactivation_hook( __FILE__, 'deactivate_imjolwp_ai_automation_for_word
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-for-wordpress.php';
+// require plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-for-wordpress.php';
 
 /**
  * Begins execution of the plugin.

@@ -1,6 +1,6 @@
 <?php
-namespace Admin\Settings;
-class Settings_page {
+namespace Imjolwp\Admin\Settings;
+class Imjolwp_Ai_Automation_For_Wordpress_Settings {
 
     /**
 	 * Display the settings page.

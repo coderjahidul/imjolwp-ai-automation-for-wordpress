@@ -20,6 +20,7 @@
  * @subpackage Imjolwp_Ai_Automation_For_Wordpress/includes
  * @author     Jahidul islam Sabuz <sobuz0349@gmail.com>
  */
+namespace Imjolwp;
 class Imjolwp_Ai_Automation_For_Wordpress_Deactivator {
 
 	/**

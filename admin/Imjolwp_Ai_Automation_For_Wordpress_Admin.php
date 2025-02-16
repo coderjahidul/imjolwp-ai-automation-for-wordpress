@@ -1,9 +1,9 @@
 <?php
-namespace Admin;
-use Includes\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
-use Includes\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Excerpt;
-use Admin\Settings\Settings_page;
-use Admin\Settings\Imjolwp_dashboard;
+namespace Imjolwp\Admin;
+use Imjolwp\Includes\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
+use Imjolwp\Includes\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Excerpt;
+use Imjolwp\Admin\Settings\Imjolwp_Ai_Automation_For_Wordpress_Settings;
+use Imjolwp\Admin\Settings\Imjolwp_Ai_Automation_For_Wordpress_Dashboard;
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -73,7 +73,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 		// Load the settings page
 		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-imjolwp-ai-automation-for-wordpress-settings'; // using composer autoloader
 	
-		$settings_page = new Settings_page();
+		$settings_page = new Imjolwp_Ai_Automation_For_Wordpress_Settings();
 		$settings_page->display_settings_page();  // Ensure this method is defined in your Settings_page class to render the page
 	}
 
@@ -81,7 +81,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 		// Load the dashboard page
 		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-imjolwp-ai-automation-for-wordpress-dashboard.php'; // using composer autoloader
 
-		$dashboard_page = new Imjolwp_dashboard();
+		$dashboard_page = new Imjolwp_Ai_Automation_For_Wordpress_Dashboard();
 		$dashboard_page->display_dashboard_page(); // Ensure this method is defined in your Dashboard_page class to render the page
 	}
 

@@ -20,6 +20,7 @@
  * @subpackage Imjolwp_Ai_Automation_For_Wordpress/public
  * @author     Jahidul islam Sabuz <sobuz0349@gmail.com>
  */
+namespace Imjolwp\Public;
 class Imjolwp_Ai_Automation_For_Wordpress_Public {
 
 	/**

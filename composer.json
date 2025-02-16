@@ -4,6 +4,7 @@
     "autoload": {
         "psr-4": {
             "Imjolwp\\AI\\": "includes/ai/",
+            "Imjolwp\\Autoload\\": "includes/autoload/",
             "Imjolwp\\Admin\\": "admin/",
             "Imjolwp\\Public\\": "public/",
             "Imjolwp\\": "includes/"

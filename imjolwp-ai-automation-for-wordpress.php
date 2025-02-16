@@ -91,3 +91,23 @@ function run_imjolwp_ai_automation_for_wordpress() {
 
 }
 run_imjolwp_ai_automation_for_wordpress();
+
+// Hook into the 'ai_content_generate_event' action to handle the scheduled post generation
+add_action('ai_content_generate_event', 'generate_scheduled_content', 10, 4);
+
+function generate_scheduled_content($title, $generated_content, $post_status, $post_type) {
+    // Save the AI-generated content as a post
+    $post_id = wp_insert_post([
+        'post_title'   => $title,
+        'post_content' => $generated_content,
+        'post_status'  => $post_status,
+        'post_type'    => $post_type,
+    ]);
+
+    if ($post_id) {
+        // Send a confirmation email or log if needed
+    } else {
+        // Handle error logging
+    }
+}
+

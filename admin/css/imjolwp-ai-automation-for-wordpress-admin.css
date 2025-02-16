@@ -212,3 +212,72 @@ input:checked + .slider:before {
 .button-primary:hover {
     background: #005177;
 }
+
+/* AI Content Generator */
+.ai-content-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.ai-content-form h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.ai-content-form .form-table th {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.ai-content-form .regular-text,
+.ai-content-form .regular-select,
+.ai-content-form .small-text {
+    width: 100%;
+    /* padding: 8px; */
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.ai-content-form .regular-select {
+    height: 35px;
+}
+
+.ai-content-form .submit input[type="submit"] {
+    background-color: #0073aa;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ai-content-form .submit input[type="submit"]:hover {
+    background-color: #005177;
+}
+
+.updated, .error {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.updated {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.updated a {
+    color: #0062cc;
+}

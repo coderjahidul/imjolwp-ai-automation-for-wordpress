@@ -1,18 +1,13 @@
 <?php
-
-// Exit if accessed directly
-// if (!defined('ABSPATH')) {
-//     exit;
-// }
-
 namespace Imjolwp\Admin\Partials;
+use Imjolwp\Automation\Imjolwp_Ai_Automation_For_Wordpress_Automation;
 
 class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
 
     public function display_settings_page() {
         ?>
         <div class="wrap">
-            <h1 class="wp-heading-inline">AI Content Generator</h1>
+            <h1 class="wp-heading-inline">AI Post Generator</h1>
 
             <form method="post" action="" class="ai-content-form">
                 <table class="form-table">
@@ -22,7 +17,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                     </tr>
 
                     <tr>
-                        <th scope="row"><label for="related_words">Related Words</label></th>
+                        <th scope="row"><label for="related_words">Related Keywords</label></th>
                         <td><input type="text" id="related_words" name="related_words" class="regular-text"></td>
                     </tr>
 
@@ -56,10 +51,10 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                     </tr>
 
                     <tr>
-                        <th scope="row"><label for="post_type">Post Type</label></th>
+                        <th scope="row"><label for="post_types">Post Type</label></th>
                         <td>
-                            <select id="post_type" name="post_type" class="regular-select">
-                                <?php
+                            <select id="post_types" name="post_types" class="regular-select">
+                            <?php
                                 $post_types = get_post_types(['public' => true], 'objects');
                                 foreach ($post_types as $post_type) {
                                     echo '<option value="' . esc_attr($post_type->name) . '">' . esc_html($post_type->labels->singular_name) . '</option>';
@@ -86,24 +81,26 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
             </form>
 
             <?php
-            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['post_title'])) {
+            // Handle form submission
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['post_title']) && !empty($_POST['post_title'])) {
                 $title = sanitize_text_field($_POST['post_title']);
                 $related_words = sanitize_text_field($_POST['related_words']);
                 $word_count = intval($_POST['min_word_count']);
                 $language = sanitize_text_field($_POST['language']);
                 $post_status = sanitize_text_field($_POST['post_status']);
-                $post_type = sanitize_text_field($_POST['post_type']);
+                $post_type = sanitize_text_field($_POST['post_types']);
                 $schedule_automation = isset($_POST['schedule_automation']) ? true : false;
                 $schedule_time = isset($_POST['schedule_time']) ? sanitize_text_field($_POST['schedule_time']) : '';
+                $author_id = get_current_user_id();
 
                 // Simulate AI Content Generation (Replace with AI API Call)
                 $generated_content = "This is an AI-generated post about '$title' using related words: $related_words.";
 
                 if ($schedule_automation && !empty($schedule_time)) {
-                    // Schedule the task
-                    $timestamp = strtotime($schedule_time);
+                    // Schedule the task - 6 hours from now
+                    $timestamp = strtotime($schedule_time) - 6 * 60 * 60;
                     if ($timestamp) {
-                        wp_schedule_single_event($timestamp, 'ai_content_generate_event', [$title, $generated_content, $post_status, $post_type]);
+                        wp_schedule_single_event($timestamp, 'ai_content_generate_event', [$title, $generated_content, $post_status, $post_type, $author_id]);
                         echo '<div class="updated"><p>AI Content Generation Scheduled!</p></div>';
                     }
                 } else {

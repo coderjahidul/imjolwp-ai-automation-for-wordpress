@@ -1,5 +1,5 @@
 <?php
-namespace Imjolwp\Includes\Ai;
+namespace Imjolwp\Ai;
 /**
  * Handles cURL requests for AI-related tasks.
  *
@@ -53,6 +53,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl {
         curl_close($curl);
         
         // Return the response
-        return json_decode( $response, true );
+        return $response;
     }
 }

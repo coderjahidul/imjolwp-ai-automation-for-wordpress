@@ -1,6 +1,7 @@
 <?php
 namespace Imjolwp\Admin\Partials;
 use Imjolwp\Automation\Imjolwp_Ai_Automation_For_Wordpress_Automation;
+use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
 
 class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
 
@@ -13,12 +14,12 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                 <table class="form-table">
                     <tr>
                         <th scope="row"><label for="post_title">Post Title</label></th>
-                        <td><input type="text" id="post_title" name="post_title" class="regular-text"></td>
+                        <td><input type="text" id="post_title" name="post_title" class="regular-text" placeholder="Enter post title"></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><label for="related_words">Related Keywords</label></th>
-                        <td><input type="text" id="related_words" name="related_words" class="regular-text"></td>
+                        <td><input type="text" id="related_words" name="related_words" class="regular-text" placeholder="Enter related keywords"></td>
                     </tr>
 
                     <tr>
@@ -94,7 +95,9 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                 $author_id = get_current_user_id();
 
                 // Simulate AI Content Generation (Replace with AI API Call)
-                $generated_content = "This is an AI-generated post about '$title' using related words: $related_words.";
+                // $generated_content = "This is an AI-generated post about '$title' using related words: $related_words.";
+                $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
+                $generated_content = $generated_content->generate_description($title);
 
                 if ($schedule_automation && !empty($schedule_time)) {
                     // Schedule the task - 6 hours from now

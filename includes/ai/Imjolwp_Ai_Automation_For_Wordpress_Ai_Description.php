@@ -1,6 +1,6 @@
 <?php
-namespace Imjolwp\Includes\Ai;
-use Imjolwp\Includes\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl;
+namespace Imjolwp\Ai;
+use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl;
 /**
  * Generates AI-powered description for posts.
  *
@@ -24,25 +24,23 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Description {
         $endpoint = 'openai/chat/completions';
         $max_tokens = 5000;
 
-        // Prepare the data to send in the request
-        $data = [
-            'text' => $title
-        ];
-        // Load the AI cURL class file with the correct path
-        // require_once plugin_dir_path( __FILE__ ) . 'class-imjolwp-ai-automation-for-wordpress-ai-curl.php'; // using composer
-
         // Instantiate the AI cURL class and make the request
         $curl = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl();
-        $response = $curl->make_request( $endpoint, $model, $data, $api_url, $api_key, $max_tokens );
+        $response = $curl->make_request( $endpoint, $model, $title, $api_url, $api_key, $max_tokens );
 
-        $response = "This is post description";
+        // $response = "This is post description";
 
         if ( is_wp_error( $response ) ) {
             // Handle error (optional)
             return 'Error generating description';
         }
+        // response decode
+        $response = json_decode( $response, true );
+        // Get the generated description
+        $content = $response['choices'][0]['message']['content'] ?? 'Content not found';
+        // put_program_logs("Content: " . $content);
 
         // Return the generated description
-        return ! empty( $response ) ? $response : 'Default Description';
+        return ! empty( $content ) ? $content : 'Content not found';
     }
 }

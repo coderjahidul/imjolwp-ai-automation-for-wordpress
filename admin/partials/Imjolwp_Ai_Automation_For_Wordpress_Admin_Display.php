@@ -18,13 +18,21 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                     </tr>
 
                     <tr>
-                        <th scope="row"><label for="related_words">Related Keywords</label></th>
-                        <td><input type="text" id="related_words" name="related_words" class="regular-text" placeholder="Enter related keywords"></td>
+                        <th scope="row"><label for="focus_keywords">Focus Keywords</label></th>
+                        <td><input type="text" id="focus_keywords" name="focus_keywords" class="regular-text" placeholder="Enter Focus Keywords Separated by commas"></td>
                     </tr>
 
                     <tr>
                         <th scope="row"><label for="min_word_count">Minimum Word Count</label></th>
                         <td><input type="number" id="min_word_count" name="min_word_count" class="small-text" value="500"></td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row"><label for="post_tags">Post Tags</label></th>
+                        <td>
+                            <input type="checkbox" id="post_tags" name="post_tags" value="1">
+                            <label for="post_tags">Enable Post Tags Generate</label>
+                        </td>
                     </tr>
 
                     <tr>
@@ -85,8 +93,10 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
             // Handle form submission
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['post_title']) && !empty($_POST['post_title'])) {
                 $title = sanitize_text_field($_POST['post_title']);
-                $related_words = sanitize_text_field($_POST['related_words']);
+                // Get related words separated by commas
+                $focus_keywords = sanitize_text_field($_POST['focus_keywords']);
                 $word_count = intval($_POST['min_word_count']);
+                $post_tags = isset($_POST['post_tags']) ? true : false;
                 $language = sanitize_text_field($_POST['language']);
                 $post_status = sanitize_text_field($_POST['post_status']);
                 $post_type = sanitize_text_field($_POST['post_types']);
@@ -94,26 +104,41 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                 $schedule_time = isset($_POST['schedule_time']) ? sanitize_text_field($_POST['schedule_time']) : '';
                 $author_id = get_current_user_id();
 
-                // Simulate AI Content Generation (Replace with AI API Call)
-                // $generated_content = "This is an AI-generated post about '$title' using related words: $related_words.";
-                $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
-                $generated_content = $generated_content->generate_description($title);
-
                 if ($schedule_automation && !empty($schedule_time)) {
                     // Schedule the task - 6 hours from now
                     $timestamp = strtotime($schedule_time) - 6 * 60 * 60;
                     if ($timestamp) {
-                        wp_schedule_single_event($timestamp, 'ai_content_generate_event', [$title, $generated_content, $post_status, $post_type, $author_id]);
+                        wp_schedule_single_event($timestamp, 'ai_content_generate_event', [$title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags]);
                         echo '<div class="updated"><p>AI Content Generation Scheduled!</p></div>';
                     }
                 } else {
+                    // Call the generate_description function
+                    $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
+                    $generated_content = $generated_content->generate_description($title, $word_count, $language, $focus_keywords);
+
+                    // Call the post_tags_function
+                    preg_match('/<strong>Tags:<\/strong>(.*)/', $generated_content, $matches);
+                    // Apply str_replace to modify the tags part
+                    if (isset($matches[1])) {
+                        // Split the tags into an array using a comma as the delimiter
+                        $tags_array = explode(', ', $matches[1]);
+
+                        // Rebuild the modified tags part in the HTML content
+                        str_replace($matches[1], implode(', ', $tags_array), $generated_content);
+                    }
+
                     // Save as Post immediately
                     $post_id = wp_insert_post([
                         'post_title'   => $title,
                         'post_content' => $generated_content,
                         'post_status'  => $post_status,
-                        'post_type'    => $post_type,
+                        'post_type'    => $post_type
                     ]);
+
+                    // Set post tags (this is handled separately)
+                    if ($post_tags == true && !empty($tags_array)) {
+                        wp_set_post_tags($post_id, $tags_array);
+                    }
 
                     if ($post_id) {
                         echo '<div class="updated"><p>AI Content Generated! <a href="' . get_edit_post_link($post_id) . '">Edit Post</a></p></div>';

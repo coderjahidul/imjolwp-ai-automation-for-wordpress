@@ -1,12 +1,29 @@
 <?php 
 namespace Imjolwp\Automation;
+use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
 
 class Imjolwp_Ai_Automation_For_Wordpress_Automation {
     public function __construct() {
         add_action('ai_content_generate_event', [$this, 'generate_scheduled_content'], 10, 4);
     }
 
-    public function generate_scheduled_content($title, $generated_content, $post_status, $post_type, $author_id) {
+    public function generate_scheduled_content($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags) {
+
+        // Call the generate_description function
+        $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
+        $generated_content = $generated_content->generate_description($title, $word_count, $language, $focus_keywords);
+
+        preg_match('/<strong>Tags:<\/strong>(.*)/', $generated_content, $matches);
+
+        // Apply str_replace to modify the tags part
+        if (isset($matches[1])) {
+            // Split the tags into an array using a comma as the delimiter
+            $tags_array = explode(', ', $matches[1]);
+
+            // Rebuild the modified tags part in the HTML content
+            str_replace($matches[1], implode(', ', $tags_array), $generated_content);
+        }
+
         // Save the AI-generated content as a post
         $post_id = wp_insert_post([
             'post_title'   => $title,
@@ -15,6 +32,11 @@ class Imjolwp_Ai_Automation_For_Wordpress_Automation {
             'post_type'    => $post_type,
             'post_author'  => $author_id
         ]);
+
+        // Set post tags (this is handled separately)
+        if ($post_tags == true && !empty($tags_array)) {
+            wp_set_post_tags($post_id, $tags_array);
+        }
 
         if (is_wp_error($post_id)) {
             // Log error if post creation fails

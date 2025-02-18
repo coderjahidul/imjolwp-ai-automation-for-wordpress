@@ -116,3 +116,16 @@ function put_program_logs( $data ) {
     }
 }
 
+function post_tags_function($generated_content){
+    preg_match('/<strong>Tags:<\/strong>(.*)/', $generated_content, $matches);
+
+    // Apply str_replace to modify the tags part
+    if (isset($matches[1])) {
+        // Split the tags into an array using a comma as the delimiter
+        $tags_array = explode(', ', $matches[1]);
+
+        // Rebuild the modified tags part in the HTML content
+        str_replace($matches[1], implode(', ', $tags_array), $generated_content);
+    }
+}
+

@@ -105,12 +105,8 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                 $author_id = get_current_user_id();
 
                 if ($schedule_automation && !empty($schedule_time)) {
-                    // Schedule the task - 6 hours from now
-                    $timestamp = strtotime($schedule_time) - 6 * 60 * 60;
-                    if ($timestamp) {
-                        wp_schedule_single_event($timestamp, 'ai_content_generate_event', [$title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags]);
-                        echo '<div class="updated"><p>AI Content Generation Scheduled!</p></div>';
-                    }
+                    $automation = new Imjolwp_Ai_Automation_For_Wordpress_Automation();
+                    $automation->schedule_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags, $schedule_time);
                 } else {
                     // Call the generate_description function
                     $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();

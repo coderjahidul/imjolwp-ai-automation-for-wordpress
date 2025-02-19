@@ -4,7 +4,16 @@ use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
 
 class Imjolwp_Ai_Automation_For_Wordpress_Automation {
     public function __construct() {
-        add_action('ai_content_generate_event', [$this, 'generate_scheduled_content'], 10, 4);
+        add_action('ai_content_generate_event', [$this, 'generate_scheduled_content'], 10, 9);
+    }
+
+    public function schedule_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags, $schedule_time) {
+        // Schedule the task - 6 hours from now
+        $timestamp = strtotime($schedule_time) - 6 * 60 * 60;
+        if ($timestamp) {
+            wp_schedule_single_event($timestamp, 'ai_content_generate_event', [$title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags]);
+            echo '<div class="updated"><p>AI Content Generation Scheduled!</p></div>';
+        }
     }
 
     public function generate_scheduled_content($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags) {
@@ -53,5 +62,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Automation {
             wp_mail($admin_email, 'New AI-Generated Post Created', $message);
         }
     }
+    
 }
 

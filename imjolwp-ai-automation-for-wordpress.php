@@ -70,12 +70,6 @@ register_activation_hook( __FILE__, 'activate_imjolwp_ai_automation_for_wordpres
 register_deactivation_hook( __FILE__, 'deactivate_imjolwp_ai_automation_for_wordpress' );
 
 /**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-// require plugin_dir_path( __FILE__ ) . 'includes/class-imjolwp-ai-automation-for-wordpress.php';
-
-/**
  * Begins execution of the plugin.
  *
  * Since everything within the plugin is registered via hooks,

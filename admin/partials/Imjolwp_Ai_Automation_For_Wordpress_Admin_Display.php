@@ -129,7 +129,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                         $tags_array = null;
                     }
                     
-
                     // Save as Post immediately
                     $post_id = wp_insert_post([
                         'post_title'   => $title,

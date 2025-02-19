@@ -1,7 +1,7 @@
 <?php
 namespace Imjolwp\Admin;
-use Imjolwp\Includes\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
-use Imjolwp\Includes\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Excerpt;
+use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
+use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Excerpt;
 use Imjolwp\Admin\Settings\Imjolwp_Ai_Automation_For_Wordpress_Settings;
 use Imjolwp\Admin\Settings\Imjolwp_Ai_Automation_For_Wordpress_Dashboard;
 use Imjolwp\Admin\Partials\Imjolwp_Ai_Automation_For_Wordpress_Admin_Display;
@@ -62,26 +62,16 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 
 		// Register settings and fields
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-
-		// Hook to generate post description
-		// add_action( 'save_post', array( $this, 'generate_post_description' ), 10, 3 );
-
-		// Hook to generate post excerpt
-		// add_action( 'save_post', array( $this, 'generate_post_excerpt' ), 10, 3 );
 	}
 
 	public function settings_page() {
 		// Load the settings page
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-imjolwp-ai-automation-for-wordpress-settings'; // using composer autoloader
-	
 		$settings_page = new Imjolwp_Ai_Automation_For_Wordpress_Settings();
 		$settings_page->display_settings_page();  // Ensure this method is defined in your Settings_page class to render the page
 	}
 
 	public function display_admin_dashboard_page() {
 		// Load the dashboard page
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/settings/class-imjolwp-ai-automation-for-wordpress-dashboard.php'; // using composer autoloader
-
 		$dashboard_page = new Imjolwp_Ai_Automation_For_Wordpress_Dashboard();
 		$dashboard_page->display_dashboard_page(); // Ensure this method is defined in your Dashboard_page class to render the page
 	}
@@ -282,61 +272,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
         // Ensure the correct namespace is used when instantiating the class
         $ai_post_generator = new Imjolwp_Ai_Automation_For_Wordpress_Admin_Display();
         $ai_post_generator->display_settings_page();
-    }
-
-	// public function ai_features_permission(){
-	// 	if(get_option('ai_post_description') == '1'){
-			
-	// 	}
-		
-	// }
-
-	// Generate post description
-	public function generate_post_description( $post_id, $post, $update ) {
-        // Avoid auto-saves and revisions
-        if ( wp_is_post_revision( $post_id ) || defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
-            return;
-        }
-
-        // Ensure it's a post and not a different post type
-        if ( $post->post_type !== 'post' ) {
-            return;
-        }
-
-		// Prevent infinite loop by temporarily removing the hook
-		remove_action( 'save_post', array( $this, 'generate_post_description' ), 10 );
-
-        // Get the post title
-        $post_title = get_the_title( $post_id );
-
-        // If there's no title, do nothing
-        if ( empty( $post_title ) ) {
-            return;
-        }
-		
-		// Instantiate the AI class
-		$ai_description_generator = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
-		
-		// Generate AI-based description
-		$generated_description = $ai_description_generator->generate_description( $post_title );
-
-		// Instantiate the AI class
-		$ai_summary_generator = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Excerpt();
-		
-		// Generate AI-based summary
-		$generated_summary = $ai_summary_generator->generate_excerpt( $generated_description );
-
-        // Update the post content only if it's empty
-        if ( empty( $post->post_content ) ) {
-            wp_update_post( array(
-                'ID'           => $post_id,
-                'post_content' => sanitize_text_field( $generated_description ),
-				'post_excerpt' => sanitize_text_field( $generated_summary ),
-            ) );
-        }
-
-		// Re-add the hook after updating
-		add_action( 'save_post', array( $this, 'generate_post_description' ), 10, 3 );
     }
 
 }

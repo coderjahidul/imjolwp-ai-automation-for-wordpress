@@ -1,6 +1,6 @@
 <?php
-namespace Imjolwp\Includes\Ai;
-use Imjolwp\Includes\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl;
+namespace Imjolwp\Ai;
+use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl;
 /**
  * Generates AI-powered description for posts.
  *
@@ -28,8 +28,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Excerpt {
         $data = [
             'text' => $description
         ];
-        // Load the AI cURL class file with the correct path
-        // require_once plugin_dir_path( __FILE__ ) . 'class-imjolwp-ai-automation-for-wordpress-ai-curl.php'; // using composer
 
         // Instantiate the AI cURL class and make the request
         $curl = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl();

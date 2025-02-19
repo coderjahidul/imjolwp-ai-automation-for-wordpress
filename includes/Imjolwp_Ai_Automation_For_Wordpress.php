@@ -103,35 +103,7 @@ class Imjolwp_Ai_Automation_For_Wordpress {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
-		/**
-		 * The class responsible for orchestrating the actions and filters of the
-		 * core plugin.
-		 */
-		//require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-imjolwp-ai-automation-for-wordpress-loader.php';
-
-		/**
-		 * The class responsible for defining internationalization functionality
-		 * of the plugin.
-		 */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-imjolwp-ai-automation-for-wordpress-i18n.php';
-
-		/**
-		 * The class responsible for defining all actions that occur in the admin area.
-		 */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-imjolwp-ai-automation-for-wordpress-admin.php';
-		// use Admin\Imjolwp_Ai_Automation_For_Wordpress_Admin;
-
-		/**
-		 * The class responsible for defining all actions that occur in the public-facing
-		 * side of the site.
-		 */
-		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-imjolwp-ai-automation-for-wordpress-public.php';
-
-		
-
 		$this->loader = new Imjolwp_Ai_Automation_For_Wordpress_Loader();
-
 	}
 
 	/**

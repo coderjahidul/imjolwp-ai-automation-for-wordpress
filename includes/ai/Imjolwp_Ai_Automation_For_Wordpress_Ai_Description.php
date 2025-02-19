@@ -79,8 +79,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Description {
         $curl = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl();
         $response = $curl->make_request( $endpoint, $api_url, $api_key, $additional_payload );
 
-        // $response = "This is post description";
-
         if ( is_wp_error( $response ) ) {
             // Handle error (optional)
             return 'Error generating description';
@@ -89,7 +87,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Description {
         $response = json_decode( $response, true );
         // Get the generated description
         $content = $response['choices'][0]['message']['content'] ?? 'Content not found';
-        // put_program_logs("Content: " . $content);
 
         // Return the generated description
         return ! empty( $content ) ? $content : 'Content not found';

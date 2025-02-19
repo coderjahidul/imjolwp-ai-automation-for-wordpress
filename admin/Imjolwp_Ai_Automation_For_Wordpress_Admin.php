@@ -139,15 +139,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 		);
 
 		add_submenu_page(
-			'imjolwp-ai-dashboard',
-			'Settings',
-			'Settings',
-			'manage_options',
-			'imjolwp-ai-settings',
-			array($this, 'display_settings_page')
-		);
-
-        add_submenu_page(
             'imjolwp-ai-dashboard',
             'AI Post Generator',
             'AI Post Generator',
@@ -155,6 +146,15 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
             'ai-post-generator',
             array($this, 'ai_post_generator_page')
         );
+
+		add_submenu_page(
+			'imjolwp-ai-dashboard',
+			'Settings',
+			'Settings',
+			'manage_options',
+			'imjolwp-ai-settings',
+			array($this, 'display_settings_page')
+		);
 	}
 
 	/**
@@ -209,7 +209,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 	 */
 	public function display_api_url_field() {
 		$api_url = get_option( 'imjolwp_ai_api_url' ); // Get the current saved API URL
-		echo "<input type='text' name='imjolwp_ai_api_url' value='" . esc_attr( $api_url ) . "' class='regular-text' />";
+		echo "<input type='text' placeholder='Enter Deepinfra API URL' name='imjolwp_ai_api_url' value='" . esc_attr( $api_url ) . "' class='regular-text' />";
 	}
 
 	/**
@@ -219,7 +219,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin {
 	 */
 	public function display_api_key_field() {
 		$api_key = get_option( 'imjolwp_ai_api_key' ); // Get the current saved API Key
-		echo "<input type='password' name='imjolwp_ai_api_key' value='" . esc_attr( $api_key ) . "' class='regular-text' />";
+		echo "<input type='password' placeholder='Enter Deepinfra API Key' name='imjolwp_ai_api_key' value='" . esc_attr( $api_key ) . "' class='regular-text' />";
 	}
 
 

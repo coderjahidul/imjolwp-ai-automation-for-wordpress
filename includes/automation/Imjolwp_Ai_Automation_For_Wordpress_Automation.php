@@ -1,6 +1,7 @@
 <?php 
 namespace Imjolwp\Automation;
 use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
+use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Image;
 
 class Imjolwp_Ai_Automation_For_Wordpress_Automation {
     public function __construct() {
@@ -49,6 +50,12 @@ class Imjolwp_Ai_Automation_For_Wordpress_Automation {
         // Set post tags (this is handled separately)
         if ($post_tags == true && !empty($tags_array)) {
             wp_set_post_tags($post_id, $tags_array);
+        }
+
+        // Set featured image
+        if(get_option('ai_post_image') == 1) {
+            $set_featured_image = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Image();
+            $set_featured_image->generate_image($title, $post_id);
         }
 
         if (is_wp_error($post_id)) {

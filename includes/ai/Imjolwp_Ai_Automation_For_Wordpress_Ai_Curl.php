@@ -39,7 +39,31 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl {
 
         $response = curl_exec($curl);
         curl_close($curl);
-        // put_program_logs($response);
+        put_program_logs("Curl Response: " . $response);
+        return $response;
+    }
+
+    public function make_image_generate_request($endpoint, $api_url, $api_key, $additional_payload, $model){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $api_url . '/v1/' . $endpoint . '/' . $model,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($additional_payload),
+            CURLOPT_HTTPHEADER => array(
+              'Content-Type: application/json',
+              'Authorization: Bearer ' . $api_key,
+            ),
+          ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
         return $response;
     }
 }

@@ -17,20 +17,24 @@ class Imjolwp_Ai_Automation_For_Wordpress_Automation {
     }
 
     public function generate_scheduled_content($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags) {
+        if(get_option('ai_post_description') == 1){
+            // Call the generate_description function
+            $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
+            $generated_content = $generated_content->generate_description($title, $word_count, $language, $focus_keywords);
 
-        // Call the generate_description function
-        $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
-        $generated_content = $generated_content->generate_description($title, $word_count, $language, $focus_keywords);
+            preg_match('/<strong>Tags:<\/strong>(.*)/', $generated_content, $matches);
 
-        preg_match('/<strong>Tags:<\/strong>(.*)/', $generated_content, $matches);
+            // Apply str_replace to modify the tags part
+            if (isset($matches[1])) {
+                // Split the tags into an array using a comma as the delimiter
+                $tags_array = explode(', ', $matches[1]);
 
-        // Apply str_replace to modify the tags part
-        if (isset($matches[1])) {
-            // Split the tags into an array using a comma as the delimiter
-            $tags_array = explode(', ', $matches[1]);
-
-            // Rebuild the modified tags part in the HTML content
-            str_replace($matches[1], implode(', ', $tags_array), $generated_content);
+                // Rebuild the modified tags part in the HTML content
+                str_replace($matches[1], implode(', ', $tags_array), $generated_content);
+            }
+        }else{
+            $generated_content = '';
+            $tags_array = null;
         }
 
         // Save the AI-generated content as a post

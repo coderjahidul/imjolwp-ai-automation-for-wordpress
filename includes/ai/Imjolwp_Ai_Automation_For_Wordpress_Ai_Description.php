@@ -12,6 +12,9 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Description {
      * Generate AI-powered description for a post.
      *
      * @param string $title The title of the post.
+     * @param int $word_count The desired word count for the description.
+     * @param string $language The language for the description.
+     * @param string $focus_keywords The focus keywords for the description.
      *
      * @return string The AI-generated description.
      */
@@ -23,6 +26,16 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Description {
         $model = 'meta-llama/Llama-3.3-70B-Instruct';
         $endpoint = 'openai/chat/completions';
         $max_tokens = 1000;
+
+        $temperature = 0.7;
+        $top_p = 0.9;
+        $top_k = 0;
+        $presence_penalty = 0;
+        $frequency_penalty = 0;
+        $response_format = 'none';
+        $seed = null;
+
+        // Prepare the blog prompt
         $blog_prompt = "Generate a detailed blog post about: '$title'. 
         Structure the response using proper HTML tags, ensuring readability and SEO optimization, and focus on the following keywords: '$focus_keywords'.
 
@@ -39,9 +52,32 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Description {
         <p><strong>Tags:</strong> Provide a comma-separated list of tags (minimum 3) that are relevant to the topic of the blog post, including the focus keywords if appropriate.</p>
         <p><strong>Language:</strong> Please generate the post in the following language: '$language'.</p>
         ";
+
+        // Additional Payload for the API request
+        $additional_payload = array(
+            'model' => $model,
+            'messages' => array(
+                array(
+                    'role' => 'user',
+                    'content' => $blog_prompt
+                )
+            ),
+            'max_tokens' => $max_tokens,
+            'temperature' => $temperature,
+            'top_p' => $top_p,
+            'top_k' => $top_k,
+            'presence_penalty' => $presence_penalty,
+            'frequency_penalty' => $frequency_penalty,
+            'response_format' => $response_format !== 'none' ? $response_format : null
+        );
+
+        if (!is_null($seed)) {
+            $additional_payload['seed'] = $seed;
+        }
+
         // Instantiate the AI cURL class and make the request
         $curl = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl();
-        $response = $curl->make_request( $endpoint, $model, $blog_prompt, $api_url, $api_key, $max_tokens );
+        $response = $curl->make_request( $endpoint, $api_url, $api_key, $additional_payload );
 
         // $response = "This is post description";
 

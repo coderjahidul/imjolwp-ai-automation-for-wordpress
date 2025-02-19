@@ -15,29 +15,36 @@ class Imjolwp_Ai_Automation_For_Wordpress_Dashboard {
 				<div class="ai-content-generator-section">
 					<h2><?php _e('AI Features', 'ai-content-generator'); ?></h2>
 					<div class="ai-features-grid">
-						<?php
-						$features = [
-							'ai_post_title' => __('Post Title', 'ai-content-generator'),
-							'ai_post_description' => __('Post Description', 'ai-content-generator'),
-							'ai_post_image' => __('Post Image', 'ai-content-generator'),
-							'ai_post_summary' => __('Post Summary', 'ai-content-generator'),
-							'ai_post_audio' => __('Post Audio', 'ai-content-generator'),
-							'ai_post_video' => __('Post Video', 'ai-content-generator'),
-						];
-	
-						foreach ($features as $key => $label) {
-							$enabled = get_option($key, '0'); // Default to disabled
-							?>
-							<div class="ai-feature-card">
-								<h3><?php echo $label; ?></h3>
-								<p><?php echo sprintf(__('Generate %s using AI.', 'ai-content-generator'), strtolower($label)); ?></p>
+					<?php
+					$features = [
+						// 'ai_post_title' => __('Post Title', 'ai-content-generator'),
+						'ai_post_description' => __('Post Description', 'ai-content-generator'),
+						'ai_post_image' => __('Post Image', 'ai-content-generator'),
+						// 'ai_post_excerpt' => __('Post Excerpt', 'ai-content-generator'),
+						'ai_post_audio' => __('Post Audio', 'ai-content-generator'),
+						'ai_post_video' => __('Post Video', 'ai-content-generator'),
+					];
+
+					$pro_features = ['ai_post_audio', 'ai_post_video']; // Features for Pro version
+
+					foreach ($features as $key => $label) {
+						$enabled = get_option($key, '0'); // Default to disabled
+						?>
+						<div class="ai-feature-card">
+							<h3><?php echo $label; ?></h3>
+							<p><?php echo sprintf(__('Generate %s using AI.', 'ai-content-generator'), strtolower($label)); ?></p>
+							<?php if (in_array($key, $pro_features)) { ?>
+								<span class="pro-badge"><?php _e('Pro Feature', 'ai-content-generator'); ?></span>
+							<?php } else { ?>
 								<label class="switch">
 									<input type="checkbox" data-feature="<?php echo esc_attr($key); ?>" <?php checked($enabled, '1'); ?> onchange="toggleFeature(this)">
 									<span class="slider"></span>
 								</label>
-							</div>
-						<?php } ?>
-					</div>
+							<?php } ?>
+						</div>
+					<?php } ?>
+				</div>
+
 				</div>
 			</div>
 		</div>

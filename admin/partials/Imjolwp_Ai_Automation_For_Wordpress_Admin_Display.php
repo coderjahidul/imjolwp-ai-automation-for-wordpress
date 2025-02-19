@@ -44,6 +44,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                                 <option value="es">Spanish</option>
                                 <option value="fr">French</option>
                                 <option value="de">German</option>
+                                <option value="bn">বাংলা (Bangla)</option>
                             </select>
                         </td>
                     </tr>

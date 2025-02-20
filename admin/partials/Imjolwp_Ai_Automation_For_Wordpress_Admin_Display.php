@@ -1,10 +1,29 @@
 <?php
+/**
+ * Admin Display Class for AI Post Generator
+ * 
+ * @package Imjolwp_Ai_Automation
+ * @subpackage Admin
+ */
 namespace Imjolwp\Admin\Partials;
+
 use Imjolwp\Automation\Imjolwp_Ai_Automation_For_Wordpress_Automation;
-use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
-use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Image;
+use Imjolwp\Automation\Imjolwp_Ai_Automation_For_Wordpress_Queue;
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
+/**
+ * Class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display
+ * Handles admin settings display for AI post generation.
+ */
 
 class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
+
+    /**
+     * Display the AI Post Generator settings page.
+     */
 
     public function display_settings_page() {
         ?>
@@ -92,7 +111,7 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
             </form>
 
             <?php
-            // Handle form submission
+            // Handle form submission securely.
             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['post_title']) && !empty($_POST['post_title'])) {
                 $title = sanitize_text_field($_POST['post_title']);
                 // Get related words separated by commas
@@ -106,54 +125,13 @@ class Imjolwp_Ai_Automation_For_Wordpress_Admin_Display {
                 $schedule_time = isset($_POST['schedule_time']) ? sanitize_text_field($_POST['schedule_time']) : '';
                 $author_id = get_current_user_id();
 
+                // If schedule automation is enabled, schedule the AI content generation.
                 if ($schedule_automation && !empty($schedule_time)) {
                     $automation = new Imjolwp_Ai_Automation_For_Wordpress_Automation();
                     $automation->schedule_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags, $schedule_time);
                 } else {
-                    if(get_option('ai_post_description') == 1){
-                        // Call the generate_description function
-                        $generated_content = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Description();
-                        $generated_content = $generated_content->generate_description($title, $word_count, $language, $focus_keywords);
-
-                        // Call the post_tags_function
-                        preg_match('/<strong>Tags:<\/strong>(.*)/', $generated_content, $matches);
-                        // Apply str_replace to modify the tags part
-                        if (isset($matches[1])) {
-                            // Split the tags into an array using a comma as the delimiter
-                            $tags_array = explode(', ', $matches[1]);
-
-                            // Rebuild the modified tags part in the HTML content
-                            str_replace($matches[1], implode(', ', $tags_array), $generated_content);
-                        }
-                    }else{
-                        $generated_content = '';
-                        $tags_array = null;
-                    }
-                    
-                    // Save as Post immediately
-                    $post_id = wp_insert_post([
-                        'post_title'   => $title,
-                        'post_content' => $generated_content,
-                        'post_status'  => $post_status,
-                        'post_type'    => $post_type
-                    ]);
-
-                    // Set post tags (this is handled separately)
-                    if ($post_tags == true && !empty($tags_array)) {
-                        wp_set_post_tags($post_id, $tags_array);
-                    }
-
-                    // Set featured image
-                    if(get_option('ai_post_image') == 1) {
-                        $set_featured_image = new Imjolwp_Ai_Automation_For_Wordpress_Ai_Image();
-                        $set_featured_image->generate_image($title, $post_id);
-                    }
-
-                    if ($post_id) {
-                        echo '<div class="updated"><p>AI Content Generated! <a href="' . get_edit_post_link($post_id) . '">Edit Post</a></p></div>';
-                    } else {
-                        echo '<div class="error"><p>Failed to generate content.</p></div>';
-                    }
+                    $queue = new Imjolwp_Ai_Automation_For_Wordpress_Queue();
+                    $queue->queue_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags);
                 }
             }
             ?>

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Summary of namespace Imjolwp\Admin\Settings
+ */
 namespace Imjolwp\Admin\Settings;
 class Imjolwp_Ai_Automation_For_Wordpress_Settings {
 

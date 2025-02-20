@@ -39,7 +39,6 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Curl {
 
         $response = curl_exec($curl);
         curl_close($curl);
-        put_program_logs("Curl Response: " . $response);
         return $response;
     }
 

@@ -1,4 +1,10 @@
-<?php 
+<?php
+/**
+ * AI Content Automation Class
+ *
+ * @package Imjolwp\Automation
+ */
+
 namespace Imjolwp\Automation;
 use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
 use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Image;
@@ -8,6 +14,20 @@ class Imjolwp_Ai_Automation_For_Wordpress_Automation {
         add_action('ai_content_generate_event', [$this, 'generate_scheduled_content'], 10, 9);
     }
 
+    /**
+     * Schedule AI content generation.
+     *
+     * @param string $title
+     * @param int $word_count
+     * @param string $language
+     * @param string $focus_keywords
+     * @param string $post_status
+     * @param string $post_type
+     * @param int $author_id
+     * @param bool $post_tags
+     * @param string $schedule_time
+     */
+
     public function schedule_ai_content_generation($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags, $schedule_time) {
         // Schedule the task - 6 hours from now
         $timestamp = strtotime($schedule_time) - 6 * 60 * 60;
@@ -16,6 +36,19 @@ class Imjolwp_Ai_Automation_For_Wordpress_Automation {
             echo '<div class="updated"><p>AI Content Generation Scheduled!</p></div>';
         }
     }
+
+    /**
+     * Generate AI-generated content and create a WordPress post.
+     *
+     * @param string $title
+     * @param int $word_count
+     * @param string $language
+     * @param string $focus_keywords
+     * @param string $post_status
+     * @param string $post_type
+     * @param int $author_id
+     * @param bool $post_tags
+     */
 
     public function generate_scheduled_content($title, $word_count, $language, $focus_keywords, $post_status, $post_type, $author_id, $post_tags) {
         if(get_option('ai_post_description') == 1){

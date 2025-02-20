@@ -1,7 +1,5 @@
 <?php
 namespace Imjolwp\Admin;
-use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Description;
-use Imjolwp\Ai\Imjolwp_Ai_Automation_For_Wordpress_Ai_Excerpt;
 use Imjolwp\Admin\Settings\Imjolwp_Ai_Automation_For_Wordpress_Settings;
 use Imjolwp\Admin\Settings\Imjolwp_Ai_Automation_For_Wordpress_Dashboard;
 use Imjolwp\Admin\Partials\Imjolwp_Ai_Automation_For_Wordpress_Admin_Display;

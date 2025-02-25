@@ -3,7 +3,7 @@ Contributors: jahidul
 Donate link: https://github.com/coderjahidul/
 Tags: ai, automation, content generation, elementor
 Requires at least: 5.0
-Tested up to: 6.4
+Tested up to: 6.7
 Stable tag: 1.0.0
 Requires PHP: 7.2
 License: GPLv2 or later

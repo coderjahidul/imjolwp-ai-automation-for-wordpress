@@ -91,15 +91,18 @@ function put_program_logs( $data ) {
 
     // Ensure the directory for logs exists
     $directory = __DIR__ . '/program_logs/';
-    if ( !file_exists( $directory ) ) {
-        mkdir( $directory, 0777, true );
+    if ( ! file_exists( $directory ) ) {
+        // Use wp_mkdir_p instead of mkdir
+        if ( ! wp_mkdir_p( $directory ) ) {
+            return "Failed to create directory.";
+        }
     }
 
     // Construct the log file path
     $file_name = $directory . 'program_logs.log';
 
     // Append the current datetime to the log entry
-    $current_datetime = date( 'Y-m-d H:i:s' );
+    $current_datetime = gmdate( 'Y-m-d H:i:s' ); // Use gmdate instead of date
     $data             = $data . ' - ' . $current_datetime;
 
     // Write the log entry to the file
@@ -109,6 +112,7 @@ function put_program_logs( $data ) {
         return "Failed to append data to file.";
     }
 }
+
 
 add_action('plugins_loaded', function() {
     new \Imjolwp\Automation\Imjolwp_Ai_Automation_For_Wordpress_Automation();

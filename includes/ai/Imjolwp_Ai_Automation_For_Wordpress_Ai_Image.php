@@ -49,8 +49,9 @@ class Imjolwp_Ai_Automation_For_Wordpress_Ai_Image {
 
         // Check if decoding was successful
         if (json_last_error() !== JSON_ERROR_NONE) {
-            die("JSON decode error: " . json_last_error_msg());
+            die(esc_html__("JSON decode error: ", "imjolwp-ai-automation-for-wordpress") . esc_html(json_last_error_msg()));
         }
+
 
         // Check if the response contains an image
         if (isset($data['images']) && count($data['images']) > 0) {

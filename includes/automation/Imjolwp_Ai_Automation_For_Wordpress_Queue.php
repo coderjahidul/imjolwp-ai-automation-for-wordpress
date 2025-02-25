@@ -63,9 +63,11 @@ class Imjolwp_Ai_Automation_For_Wordpress_Queue{
         }
 
         if ($post_id) {
-            echo '<div class="updated"><p>AI Content Generated! <a href="' . get_edit_post_link($post_id) . '">Edit Post</a></p></div>';
+            echo '<div class="updated"><p>' . esc_html__('AI Content Generated!', 'imjolwp-ai-automation-for-wordpress') . 
+                 ' <a href="' . esc_url(get_edit_post_link($post_id)) . '">' . esc_html__('Edit Post', 'imjolwp-ai-automation-for-wordpress') . '</a></p></div>';
         } else {
-            echo '<div class="error"><p>Failed to generate content.</p></div>';
+            echo '<div class="error"><p>' . esc_html__('Failed to generate content.', 'imjolwp-ai-automation-for-wordpress') . '</p></div>';
         }
+        
     }
 }
